@@ -11,7 +11,6 @@ Pages:
 
 """
 
-# ── Imports ────────────────────────────────────────────────────
 import re                    # text cleaning
 import string                # punctuation removal
 import warnings              # suppress warnings
@@ -737,9 +736,7 @@ elif page == "🔍  Live Classifier":
         st.warning("Please enter some ticket text first.")
 
 
-# ══════════════════════════════════════════════════════════════
 # PAGE 3 — ANALYTICS
-# ══════════════════════════════════════════════════════════════
 
 elif page == "📊  Analytics":
     st.markdown('<div class="hero-title">Dataset Analytics</div>', unsafe_allow_html=True)
