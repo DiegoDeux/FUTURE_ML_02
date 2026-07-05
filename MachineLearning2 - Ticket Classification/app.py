@@ -41,10 +41,7 @@ LEMMATIZER = WordNetLemmatizer()
 # Path to the models/ folder (sits next to app.py in the root)
 MODEL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "models")
 
-
-# ══════════════════════════════════════════════════════════════
-# PAGE CONFIG — must be the very first Streamlit call
-# ══════════════════════════════════════════════════════════════
+# PAGE CONFIG
 
 st.set_page_config(
     page_title="TicketIQ · IT Support Classifier",
@@ -53,10 +50,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-
-# ══════════════════════════════════════════════════════════════
 # CUSTOM CSS — dark glassmorphism theme
-# ══════════════════════════════════════════════════════════════
 
 st.markdown("""
 <style>
@@ -209,9 +203,7 @@ html, body, [class*="css"] {
 """, unsafe_allow_html=True)
 
 
-# ══════════════════════════════════════════════════════════════
 # CONSTANTS — colours for each category
-# ══════════════════════════════════════════════════════════════
 
 CATEGORY_COLORS = {
     "Fileservice":       "#3b82f6",   # blue
@@ -230,11 +222,7 @@ PLOTLY_BASE = dict(
     font=dict(color="#e6edf3", family="Inter"),
 )
 
-
-# ══════════════════════════════════════════════════════════════
 # TEXT CLEANING
-# Must be identical to train_models.py so predictions work correctly
-# ══════════════════════════════════════════════════════════════
 
 def clean_text(text: str) -> str:
     """Clean raw ticket text the same way as during training."""
@@ -251,12 +239,9 @@ def clean_text(text: str) -> str:
     ]
     return " ".join(tokens)
 
-
-# ══════════════════════════════════════════════════════════════
 # LOAD MODELS AND DATA
 # @st.cache_resource means these only load ONCE per session
 # not on every page click — keeps the dashboard fast
-# ══════════════════════════════════════════════════════════════
 
 @st.cache_resource(show_spinner="Loading ML models …")
 def load_models():
@@ -292,11 +277,7 @@ def predict_ticket(text, model, encoder):
 
     return category, proba
 
-
-# ══════════════════════════════════════════════════════════════
 # CHART FUNCTIONS
-# Each function builds and returns one Plotly or Matplotlib figure
-# ══════════════════════════════════════════════════════════════
 
 def make_donut(data: dict, title: str) -> go.Figure:
     """Donut chart showing distribution of ticket categories."""
@@ -498,9 +479,7 @@ def show_confidence_bars(proba, labels):
         """, unsafe_allow_html=True)
 
 
-# ══════════════════════════════════════════════════════════════
 # SIDEBAR NAVIGATION
-# ══════════════════════════════════════════════════════════════
 
 with st.sidebar:
     st.markdown("""
@@ -541,10 +520,7 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-
-# ══════════════════════════════════════════════════════════════
 # LOAD EVERYTHING
-# ══════════════════════════════════════════════════════════════
 
 model, encoder, results = load_models()
 df          = load_data()
@@ -554,10 +530,8 @@ cat_results = results["category"]["results"]
 best_name   = results["category"]["best_model_name"]
 best_res    = next(r for r in cat_results if r["name"] == best_name)
 
-
-# ══════════════════════════════════════════════════════════════
 # PAGE 1 — OVERVIEW
-# ══════════════════════════════════════════════════════════════
+
 
 if page == "🏠  Overview":
     st.markdown('<div class="hero-title">IT Support Ticket Intelligence</div>', unsafe_allow_html=True)
@@ -658,9 +632,7 @@ if page == "🏠  Overview":
             """, unsafe_allow_html=True)
 
 
-# ══════════════════════════════════════════════════════════════
 # PAGE 2 — LIVE CLASSIFIER
-# ══════════════════════════════════════════════════════════════
 
 elif page == "🔍  Live Classifier":
     st.markdown('<div class="hero-title">Live Ticket Classifier</div>', unsafe_allow_html=True)
@@ -778,9 +750,7 @@ elif page == "📊  Analytics":
     )
 
 
-# ══════════════════════════════════════════════════════════════
 # PAGE 4 — MODEL PERFORMANCE
-# ══════════════════════════════════════════════════════════════
 
 elif page == "🧠  Model Performance":
     st.markdown('<div class="hero-title">Model Performance</div>', unsafe_allow_html=True)
@@ -835,9 +805,7 @@ elif page == "🧠  Model Performance":
     st.dataframe(pd.DataFrame(summary), use_container_width=True, hide_index=True)
 
 
-# ══════════════════════════════════════════════════════════════
 # PAGE 5 — WORD CLOUDS
-# ══════════════════════════════════════════════════════════════
 
 elif page == "☁️  Word Clouds":
     st.markdown('<div class="hero-title">Word Clouds by Category</div>', unsafe_allow_html=True)
@@ -870,9 +838,7 @@ elif page == "☁️  Word Clouds":
                 )
 
 
-# ══════════════════════════════════════════════════════════════
 # PAGE 6 — BATCH PROCESSOR
-# ══════════════════════════════════════════════════════════════
 
 elif page == "📤  Batch Processor":
     st.markdown('<div class="hero-title">Batch Ticket Processor</div>', unsafe_allow_html=True)

@@ -54,9 +54,7 @@ MODEL_DIR = os.path.join(ROOT, "models")  # where we save trained models
 os.makedirs(MODEL_DIR, exist_ok=True)     # create models/ if it doesn't exist
 
 
-# ══════════════════════════════════════════════════════════════
 # STEP 1 — TEXT CLEANING
-# ══════════════════════════════════════════════════════════════
 
 def clean_text(text: str) -> str:
     """
@@ -85,9 +83,7 @@ def clean_text(text: str) -> str:
     return " ".join(tokens)   # join back into one string
 
 
-# ══════════════════════════════════════════════════════════════
 # STEP 2 — BUILD ML PIPELINE
-# ══════════════════════════════════════════════════════════════
 
 def build_pipeline(classifier) -> Pipeline:
     """
@@ -116,9 +112,7 @@ def build_pipeline(classifier) -> Pipeline:
     ])
 
 
-# ══════════════════════════════════════════════════════════════
 # STEP 3 — EVALUATE A TRAINED MODEL
-# ══════════════════════════════════════════════════════════════
 
 def evaluate_model(name, pipeline, X_test, y_test, label_names) -> dict:
     """
@@ -154,9 +148,8 @@ def evaluate_model(name, pipeline, X_test, y_test, label_names) -> dict:
     }
 
 
-# ══════════════════════════════════════════════════════════════
 # STEP 4 — MAIN TRAINING FUNCTION
-# ══════════════════════════════════════════════════════════════
+
 
 def train_and_save():
     """
@@ -274,10 +267,6 @@ def train_and_save():
     print(f"✓ All files saved to models/ folder")
     print("\nDone! Now we can run streamlit run app.py")
 
-
-# ══════════════════════════════════════════════════════════════
-# RUN THE SCRIPT
-# ══════════════════════════════════════════════════════════════
 
 # This block only runs when you execute this file directly
 # i.e. python src/train_models.py
